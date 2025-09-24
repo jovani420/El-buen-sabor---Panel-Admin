@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('orders', function (Blueprint $table) {
-            $table->id();
+        Schema::create('orders', function (Blueprint $table) {
+           $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('discount_id')->nullable()->constrained()->onDelete('set null');
-            $table->string('status')->default('pending'); // Ej. pending, processing, ready, completed
             $table->decimal('total_price', 8, 2);
-            $table->enum('delivery_option', ['pickup', 'delivery']);
-            $table->string('delivery_address')->nullable();
-            $table->time('pickup_time')->nullable();
+            $table->string('status')->default('pending');
+            $table->boolean('is_pickup')->default(true);
+            $table->text('delivery_address')->nullable();
             $table->string('tracking_code')->unique();
             $table->timestamps();
         });

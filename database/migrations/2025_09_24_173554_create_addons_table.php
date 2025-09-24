@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-          Schema::create('addons', function (Blueprint $table) {
+        Schema::create('addons', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->decimal('price', 8, 2)->default(0);
             $table->timestamps();
         });
-
-        // Tabla pivote para la relación muchos a muchos entre productos y extras
-        Schema::create('addon_product', function (Blueprint $table) {
+           Schema::create('addon_product', function (Blueprint $table) {
             $table->foreignId('addon_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->primary(['addon_id', 'product_id']);

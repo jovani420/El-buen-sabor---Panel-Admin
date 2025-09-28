@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
+
 
 class Product extends Model
 {
@@ -15,6 +17,21 @@ class Product extends Model
     protected $casts = [
         'allergens' => 'array',
     ];
+
+    // Indica que los accesores deben incluirse cuando el modelo se convierte a JSON
+    protected $appends = ['image_url']; 
+    
+      public function getImageUrlAttribute(): string
+    {
+        // Si el campo 'image' está vacío, devolvemos una URL de placeholder o vacía.
+        if (!$this->image) {
+            return ''; // O una URL de imagen por defecto
+        }
+
+        // Usa Storage::url() que genera la URL pública completa.
+        // Asume que la base del storage está configurada correctamente (ej: app_url/storage)
+        return Storage::url($this->image);
+    }
 
     public function category(): BelongsTo
     {

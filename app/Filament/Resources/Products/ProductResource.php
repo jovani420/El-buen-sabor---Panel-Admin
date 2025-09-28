@@ -43,7 +43,7 @@ class ProductResource extends Resource
                     ->required(),
                 RichEditor::make('description')->required(),
                 TextInput::make('price')->required()->numeric()->prefix('$'),
-                FileUpload::make('image')->image()->directory('product-images'),
+                FileUpload::make('image')->disk('public')->image()->directory('product-images'),
                 Toggle::make('is_featured')->label('Producto Destacado'),
                 Toggle::make('is_daily_deal')->label('Oferta del Día'),
                 Select::make('allergens')

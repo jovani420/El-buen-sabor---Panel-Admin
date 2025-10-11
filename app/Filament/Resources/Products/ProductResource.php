@@ -41,18 +41,52 @@ class ProductResource extends Resource
                 Select::make('category_id')
                     ->relationship('category', 'name')
                     ->required(),
-                RichEditor::make('description')->required(),
+                TextInput::make('description')->required(),
                 TextInput::make('price')->required()->numeric()->prefix('$'),
                 FileUpload::make('image')->disk('public')->image()->directory('product-images'),
                 Toggle::make('is_featured')->label('Producto Destacado'),
                 Toggle::make('is_daily_deal')->label('Oferta del Día'),
-                Select::make('allergens')
+                Select::make('sizes')
                     ->multiple()
                     ->searchable()
+                    ->label('Tamaños disponibles')
                     ->options([
-                        'milk' => 'Leche',
-                        'nuts' => 'Frutos Secos',
-                        'gluten' => 'Gluten',
+                        'Mediano' => 'Mediano',
+                        'Grande' => 'Grande',
+                        'Jumbo' => 'Jumbo',
+                    ]),
+                Select::make('milks')
+                    ->multiple()
+                    ->searchable()
+                    ->label('Leches disponibles')
+                    ->options([
+                        'Leche entera' => 'Leche entera',
+                        'Leche light' => 'Leche light',
+                    ]),
+                Select::make('temperatures')
+                    ->multiple()
+                    ->searchable()
+                    ->label('Temperatura disponibles')
+                    ->options([
+                        'Frio' => 'Frio',
+                        'Caliente' => 'Caliente',
+                    ]),
+                Select::make('grains')
+                    ->multiple()
+                    ->searchable()
+                    ->label('Tamaños disponibles')
+                    ->options([
+                        'Regular' => 'Regular',
+                        'Descafeinado' => 'Descafeinado',
+                    ]),
+                Select::make('flavors')
+                    ->multiple()
+                    ->searchable()
+                    ->label('Sabores disponibles')
+                    ->options([
+                        'Caramelo' => 'Caramelo',
+                        'Vainilla' => 'Vainillla',
+                        'Match' => 'Matcha',
                     ]),
                 Select::make('addons')
                     ->multiple()

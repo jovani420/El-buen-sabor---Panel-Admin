@@ -20,7 +20,11 @@ return new class extends Migration
         $table->string('image')->nullable();
         $table->boolean('is_featured')->default(false);
         $table->boolean('is_daily_deal')->default(false);
-        $table->json('allergens')->nullable();
+        $table->json('sizes')->nullable();
+        $table->json('milks')->nullable();
+        $table->json('temperatures')->nullable();
+        $table->json('grains')->nullable();
+        $table->json('flavors')->nullable();
         $table->timestamps();
     });
     }

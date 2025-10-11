@@ -12,10 +12,15 @@ use Illuminate\Support\Facades\Storage;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['category_id', 'name', 'description', 'price', 'image', 'is_featured', 'is_daily_deal', 'allergens'];
+    protected $fillable = ['category_id', 'name', 'description', 'price', 'image', 'is_featured', 'is_daily_deal', 'sizes', 'milks', 'temperatures', 'grains', 'flavors'];
 
     protected $casts = [
-        'allergens' => 'array',
+        'sizes' => 'array',
+        'milks'=> 'array',
+        'temperatures'=> 'array',
+        'grains'=> 'array',
+        'flavors' => 'array',
+
     ];
 
     // Mantenemos 'image_url' si lo necesitas para otras cosas, pero lo de abajo lo anula

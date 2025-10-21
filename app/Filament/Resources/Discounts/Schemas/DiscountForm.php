@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Discounts\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Schema;
 
 class DiscountForm
@@ -17,9 +18,17 @@ class DiscountForm
                 TextInput::make('value')
                     ->required()
                     ->numeric(),
-                TextInput::make('type')
-                    ->required(),
                 DatePicker::make('expires_at'),
+                Select::make('type')
+                    ->multiple()
+                    ->required()
+                    ->searchable()
+                    ->label('Tamaños disponibles')
+                    ->options([
+                    'percentage' => 'Descuento Porcentual', // Value: 'percentage', Label: 'Descuento Porcentual'
+                        'fixed' => 'Monto Fijo',               // Value: 'fixed', Label: 'Monto Fijo'
+                        'free_shipping' => 'Envío Gratuito',
+                    ]),
             ]);
     }
 }

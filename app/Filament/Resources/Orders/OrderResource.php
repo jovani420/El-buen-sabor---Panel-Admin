@@ -6,9 +6,7 @@ use App\Filament\Resources\Orders\Pages\CreateOrder;
 use App\Filament\Resources\Orders\Pages\EditOrder;
 use App\Filament\Resources\Orders\Pages\ListOrders;
 use App\Filament\Resources\Orders\Pages\ViewOrder;
-use App\Filament\Resources\Orders\Schemas\OrderForm;
 use App\Filament\Resources\Orders\Schemas\OrderInfolist;
-use App\Filament\Resources\Orders\Tables\OrdersTable;
 use BackedEnum;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -46,7 +44,7 @@ class OrderResource extends Resource
                     ])
                     ->required(),
                 TextInput::make('tracking_code')->required()->maxLength(255),
-                TextInput::make('total_price')->required()->numeric()->disabled()->prefix('$'),
+                TextInput::make('total_price')->required()->numeric()->prefix('$'),
                 Select::make('delivery_option')
                     ->options([
                         'pickup' => 'Recoger en Tienda',

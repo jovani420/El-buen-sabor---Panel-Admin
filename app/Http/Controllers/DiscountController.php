@@ -3,62 +3,78 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Discount;
 
 class DiscountController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+     /**
+     * Devuelve una lista de todos los descuentos activos (simula un índice administrativo).
      */
     public function index()
     {
-        //
+        // Devolvemos todos los descuentos.
+        return response()->json(Discount::all());
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Crea un nuevo descuento.
+     * Endpoint: POST /api/discounts
      */
     public function store(Request $request)
     {
-        //
+        // Validación estricta para asegurar que el descuento es usable
+        $validated = $request->validate([
+            'code' => 'required|string|unique:discounts,code|max:50',
+            'value' => 'required|numeric|min:0',
+            'type' => 'required|in:percentage,fixed', // Solo se permiten 'percentage' o 'fixed'
+            'expires_at' => 'required|date|after:now', // Debe ser una fecha futura
+        ]);
+
+        $validated['code'] = strtoupper($validated['code']);
+        
+        $discount = Discount::create($validated);
+        
+        return response()->json($discount, 201);
     }
 
     /**
-     * Display the specified resource.
+     * Muestra los detalles de un descuento específico.
+     * Endpoint: GET /api/discounts/{discount}
      */
-    public function show(string $id)
+    public function show(Discount $discount)
     {
-        //
+        return response()->json($discount);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Actualiza un descuento existente.
+     * Endpoint: PUT/PATCH /api/discounts/{discount}
      */
-    public function edit(string $id)
+    public function update(Request $request, Discount $discount)
     {
-        //
+        $validated = $request->validate([
+            'code' => 'sometimes|required|string|max:50|unique:discounts,code,' . $discount->id,
+            'value' => 'sometimes|required|numeric|min:0',
+            'type' => 'sometimes|required|in:percentage,fixed',
+            'expires_at' => 'sometimes|required|date|after_or_equal:today', 
+        ]);
+
+        if (isset($validated['code'])) {
+            $validated['code'] = strtoupper($validated['code']);
+        }
+
+        $discount->update($validated);
+
+        return response()->json($discount, 200);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Elimina un descuento.
+     * Endpoint: DELETE /api/discounts/{discount}
      */
-    public function update(Request $request, string $id)
+    public function destroy(Discount $discount)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $discount->delete();
+        return response()->json(null, 204);
     }
 }

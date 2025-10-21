@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products;
 
+
 use App\Filament\Resources\Products\Pages\CreateProduct;
 use App\Filament\Resources\Products\Pages\EditProduct;
 use App\Filament\Resources\Products\Pages\ListProducts;
@@ -43,7 +44,7 @@ class ProductResource extends Resource
                     ->required(),
                 TextInput::make('description')->required(),
                 TextInput::make('price')->required()->numeric()->prefix('$'),
-                FileUpload::make('image')->disk('public')->image()->directory('product-images'),
+                FileUpload::make('image')->image()->directory('product-images'),
                 Toggle::make('is_featured')->label('Producto Destacado'),
                 Toggle::make('is_daily_deal')->label('Oferta del Día'),
                 Select::make('sizes')
@@ -74,7 +75,7 @@ class ProductResource extends Resource
                 Select::make('grains')
                     ->multiple()
                     ->searchable()
-                    ->label('Tamaños disponibles')
+                    ->label('Granos disponibles')
                     ->options([
                         'Regular' => 'Regular',
                         'Descafeinado' => 'Descafeinado',
@@ -87,6 +88,15 @@ class ProductResource extends Resource
                         'Caramelo' => 'Caramelo',
                         'Vainilla' => 'Vainillla',
                         'Match' => 'Matcha',
+                        'fresa' => 'fresa',
+                        'coco' => 'coco',
+                        'Piña colada' => 'Piña colada',
+                        'Arandanos' => 'Arandanos',
+                        'Platano' => 'Platano',
+                        'Mango' => 'Mango',
+                        'Fruto del bosque' => 'Fruto de bosque',
+                        'Tropical' => 'Tropical',
+                        'Frutos rojos' => 'Frutos rojos',
                     ]),
                 Select::make('addons')
                     ->multiple()
